@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Notes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+
+    <style>
+        body {
+            background: linear-gradient(135deg,#04142d,#6610f2);
+            min-height: 100vh;
+        }
+        .upload-card {
+            border: none;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+        .upload-header {
+            background: linear-gradient(135deg,#0d6efd,#6610f2);
+            color: white;
+            padding: 35px;
+            text-align: center;
+        }
+        .form-control, .form-select {
+            border-radius: 12px;
+            padding: 14px;
+        }
+        .file-box {
+            border: 2px dashed #ced4da;
+            border-radius: 18px;
+            padding: 30px;
+            text-align: center;
+            background: #f8f9fa;
+        }
+        .upload-btn {
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card upload-card shadow-lg">
+
+                <div class="upload-header">
+                    <h2>📤 Upload Notes & PYQ</h2>
+                    <p class="mb-0">Share useful study material with students</p>
+                </div>
+
+                <div class="card-body p-5">
+                    <form action="/upload" method="POST" enctype="multipart/form-data">
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Select File</label>
+                            <div class="file-box">
+                                <h4>📄 Choose File</h4>
+                                <p class="text-muted mb-2">Only PDF, DOCX and PPTX files are allowed</p>
+                                <input type="file" name="file" class="form-control mt-3" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Category</label>
+                            <select name="category" class="form-select" required>
+                                <option value="Notes">Notes</option>
+                                <option value="PYQ">PYQ</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Year</label>
+                            <select id="year" name="year" class="form-select" required>
+                                <option value="FY">FY - First Year</option>
+                                <option value="SY">SY - Second Year</option>
+                                <option value="TY">TY - Third Year</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Semester</label>
+                            <select id="semester" name="semester" class="form-select" required></select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Subject</label>
+                            <select id="subject" name="subject" class="form-select" required></select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Exam Year</label>
+                            <input type="text" name="exam_year" class="form-control" placeholder="Example: 2024">
+                        </div>
+
+                        <button type="submit" class="btn btn-success upload-btn w-100">
+                            🚀 Upload File
+                        </button>
+
+                        <a href="/profile" class="btn btn-secondary w-100 mt-3">
+                            Back to Profile
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const subjectsData = {
+        FY: {
+            sem1: ["Logic Building with C", "Web Technology", "Computer Network"],
+            sem2: ["OOP's using C++", "Data Structure", "RDBMS"]
+        },
+        SY: {
+            sem3: ["Java Programming", "Programming with Python", "Software Engineering"],
+            sem4: ["Web Development using J2EE", "Operating System", "Software Testing"]
+        },
+        TY: {
+            sem5: ["Linux", ".Net / C#", "Python for Data Science"],
+            sem6: ["Cloud Computing"]
+        }
+    };
+
+    const yearDropdown = document.getElementById("year");
+    const semesterDropdown = document.getElementById("semester");
+    const subjectDropdown = document.getElementById("subject");
+
+    function updateSubjects() {
+        const year = yearDropdown.value;
+        const semester = semesterDropdown.value;
+
+        subjectDropdown.innerHTML = '<option value="" selected disabled>Select Subject</option>';
+
+        const subjects = (subjectsData[year] && subjectsData[year][semester]) || [];
+
+        subjects.forEach(function(subject) {
+            const option = document.createElement("option");
+            option.value = subject;
+            option.textContent = subject;
+            subjectDropdown.appendChild(option);
+        });
+    }
+
+    function updateSemester() {
+        const year = yearDropdown.value;
+
+        semesterDropdown.innerHTML = "";
+
+        const semesters = {
+            FY: [["sem1", "Semester 1"], ["sem2", "Semester 2"]],
+            SY: [["sem3", "Semester 3"], ["sem4", "Semester 4"]],
+            TY: [["sem5", "Semester 5"], ["sem6", "Semester 6"]]
+        };
+
+        semesters[year].forEach(function(item) {
+            const option = document.createElement("option");
+            option.value = item[0];
+            option.textContent = item[1];
+            semesterDropdown.appendChild(option);
+        });
+
+        updateSubjects();
+    }
+
+    yearDropdown.addEventListener("change", updateSemester);
+    semesterDropdown.addEventListener("change", updateSubjects);
+
+    updateSemester();
+});
+</script>
+
+</body>
+</html>

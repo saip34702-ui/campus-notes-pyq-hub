@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit Profile</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+
+    <style>
+
+        body{
+            background:linear-gradient(135deg,#04142d,#6610f2);
+            min-height:100vh;
+        }
+
+        .edit-card{
+            border:none;
+            border-radius:30px;
+            overflow:hidden;
+        }
+
+        .card-header-custom{
+            background:linear-gradient(135deg,#198754,#0d6efd);
+            color:white;
+            text-align:center;
+            padding:35px;
+        }
+
+        .form-control,
+        .form-select{
+            border-radius:12px;
+            padding:14px;
+        }
+
+        .form-control:focus,
+        .form-select:focus{
+            box-shadow:0 0 15px rgba(13,110,253,0.35);
+            border-color:#0d6efd;
+        }
+
+        .save-btn{
+            border-radius:12px;
+            padding:14px;
+            font-size:17px;
+            font-weight:bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="row justify-content-center align-items-center"
+         style="min-height:100vh;">
+
+        <div class="col-lg-7">
+
+            <div class="card edit-card shadow-lg">
+
+                <div class="card-header-custom">
+
+                    <h2>
+                        👤 Edit Profile
+                    </h2>
+
+                    <p class="mb-0">
+                        Update your personal information
+                    </p>
+
+                </div>
+
+                <div class="card-body p-5">
+
+                    <form method="POST">
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-bold">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                name="name"
+                                value="{{ user[1] }}"
+                                class="form-control"
+                                placeholder="Enter your full name"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-bold">
+                                Academic Year
+                            </label>
+
+                            <select
+                                name="year"
+                                class="form-select">
+
+                                <option value="FY"
+                                {% if user[4] == "FY" %}selected{% endif %}>
+                                    FY - First Year
+                                </option>
+
+                                <option value="SY"
+                                {% if user[4] == "SY" %}selected{% endif %}>
+                                    SY - Second Year
+                                </option>
+
+                                <option value="TY"
+                                {% if user[4] == "TY" %}selected{% endif %}>
+                                    TY - Third Year
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-bold">
+                                Roll Number
+                            </label>
+
+                            <input
+                                type="text"
+                                name="roll_no"
+                                value="{{ user[7] }}"
+                                class="form-control"
+                                placeholder="Enter roll number">
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-bold">
+                                Mobile Number
+                            </label>
+
+                            <input
+                                type="text"
+                                name="mobile"
+                                value="{{ user[8] }}"
+                                class="form-control"
+                                placeholder="Enter mobile number">
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success save-btn w-100">
+
+                            💾 Save Changes
+
+                        </button>
+
+                        <a href="/settings"
+                           class="btn btn-secondary w-100 mt-3">
+
+                            ← Back to Settings
+
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

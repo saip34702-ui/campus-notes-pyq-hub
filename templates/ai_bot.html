@@ -1,0 +1,121 @@
+<!-- Floating AI Bot Button -->
+<button id="aiBotButton"
+        class="btn btn-primary rounded-circle shadow"
+        data-bs-toggle="modal"
+        data-bs-target="#aiBotModal"
+        style="
+            position:fixed;
+            bottom:25px;
+            right:25px;
+            width:65px;
+            height:65px;
+            z-index:9999;
+            font-size:28px;
+        ">
+    🤖
+</button>
+
+<!-- AI Bot Modal -->
+<div class="modal fade" id="aiBotModal">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary text-white">
+
+                <h5 class="modal-title">
+                    🤖 Campus AI Assistant
+                </h5>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <form id="aiBotForm">
+
+                    <input type="text"
+                           id="aiQuestionInput"
+                           name="question"
+                           class="form-control mb-3"
+                           placeholder="Ask anything..."
+                           required>
+
+                    <button class="btn btn-primary w-100">
+                        Ask AI
+                    </button>
+
+                </form>
+
+                <div id="aiBotAnswer"
+                     class="alert alert-info mt-3"
+                     style="display:none;">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+document.getElementById("aiBotForm")
+.addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    let question =
+        document.getElementById("aiQuestionInput").value;
+
+    let answerBox =
+        document.getElementById("aiBotAnswer");
+
+    answerBox.style.display = "block";
+    answerBox.innerHTML = "⏳ AI is thinking...";
+
+    fetch("/help_bot", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "question=" + encodeURIComponent(question)
+    })
+    .then(response => response.json())
+    .then(data => {
+        answerBox.innerHTML =
+            "<strong>🤖 AI:</strong><br>" + data.answer;
+    });
+
+});
+
+/* Footer वर button hide होईल */
+let footer = document.querySelector("footer");
+let aiButton = document.getElementById("aiBotButton");
+
+if(footer){
+
+    let observer = new IntersectionObserver(function(entries){
+
+        entries.forEach(function(entry){
+
+            if(entry.isIntersecting){
+                aiButton.style.display = "none";
+            }
+            else{
+                aiButton.style.display = "block";
+            }
+
+        });
+
+    });
+
+    observer.observe(footer);
+}
+</script>

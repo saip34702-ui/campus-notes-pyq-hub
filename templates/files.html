@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Uploaded Files</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+
+    <style>
+        body{
+            background:#f4f6f9;
+        }
+
+        .navbar{
+            box-shadow:0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .hero-card{
+            background:linear-gradient(135deg,#0d6efd,#6610f2);
+            color:white;
+            border:none;
+            border-radius:25px;
+        }
+
+        .table-card{
+            border:none;
+            border-radius:22px;
+            overflow:hidden;
+        }
+
+        .table{
+            margin-bottom:0;
+        }
+
+        .action-btn{
+            margin:3px;
+        }
+
+        .search-box{
+            border-radius:15px;
+            padding:14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark bg-primary">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="/">
+            📚 Campus Notes & PYQ Hub
+        </a>
+
+        <div class="d-flex gap-2">
+
+            <a href="/profile" class="btn btn-light">
+                👤 My Profile
+            </a>
+
+            <a href="/login" class="btn btn-warning">
+                Login
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<div class="container mt-5 mb-5">
+
+    <div class="card hero-card shadow p-4 mb-4">
+
+        <h2 class="fw-bold">
+            📚 Uploaded Notes & PYQs
+        </h2>
+
+        <p class="mb-0">
+            Preview, download and report study resources.
+        </p>
+
+    </div>
+
+    <div class="card table-card shadow">
+
+        <div class="card-body p-4">
+
+            <form action="/search"
+                  method="GET"
+                  class="row mb-4">
+
+                <div class="col-md-10 mb-2">
+
+                    <input type="text"
+                           name="subject"
+                           class="form-control search-box"
+                           placeholder="🔍 Search by Subject, Year, Semester, Category..."
+                           required>
+
+                </div>
+
+                <div class="col-md-2 mb-2">
+
+                    <button class="btn btn-primary w-100 h-100">
+                        Search
+                    </button>
+
+                </div>
+
+            </form>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover table-bordered align-middle text-center">
+
+                    <thead class="table-primary">
+
+                        <tr>
+                            <th>ID</th>
+                            <th>File Name</th>
+                            <th>Category</th>
+                            <th>Semester</th>
+                            <th>Subject</th>
+                            <th>Actions</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for file in files %}
+
+                        <tr>
+
+                            <td>{{ file[0] }}</td>
+                            <td>{{ file[1] }}</td>
+                            <td>
+                                <span class="badge bg-info text-dark">
+                                    {{ file[2] }}
+                                </span>
+                            </td>
+                            <td>{{ file[4] }}</td>
+                            <td>{{ file[5] }}</td>
+
+                            <td>
+
+                                <a href="{{ url_for('uploaded_file', filename=file[1]) }}"
+                                   target="_blank"
+                                   class="btn btn-primary btn-sm action-btn">
+                                    👁 Preview
+                                </a>
+
+                                <a href="{{ url_for('download_file', filename=file[1]) }}"
+                                   class="btn btn-success btn-sm action-btn">
+                                    ⬇ Download
+                                </a>
+
+                                {% if session.get("user_id") %}
+
+                                <a href="/report/{{ file[0] }}"
+                                   class="btn btn-warning btn-sm action-btn">
+                                    🚩 Report
+                                </a>
+
+                                {% else %}
+
+                                <a href="/login"
+                                   class="btn btn-outline-warning btn-sm action-btn">
+                                    Login to Report
+                                </a>
+
+                                {% endif %}
+
+                                {% if session.get("role") == "admin" %}
+
+                                <a href="/delete/{{ file[0] }}"
+                                   class="btn btn-danger btn-sm action-btn"
+                                   onclick="return confirm('Delete this file?')">
+                                    Delete
+                                </a>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% else %}
+
+                        <tr>
+                            <td colspan="6"
+                                class="text-center text-muted py-4">
+                                No files found.
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

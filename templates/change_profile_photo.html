@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Change Profile Photo</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+
+    <style>
+        body{
+            background:linear-gradient(135deg,#04142d,#6610f2);
+            min-height:100vh;
+        }
+
+        .photo-card{
+            border:none;
+            border-radius:30px;
+            overflow:hidden;
+        }
+
+        .photo-header{
+            background:linear-gradient(135deg,#0d6efd,#6610f2);
+            color:white;
+            text-align:center;
+            padding:35px;
+        }
+
+        .preview-img{
+            width:170px;
+            height:170px;
+            object-fit:cover;
+            border-radius:50%;
+            border:5px solid white;
+            box-shadow:0 10px 30px rgba(0,0,0,0.25);
+        }
+
+        .form-control{
+            border-radius:12px;
+            padding:14px;
+        }
+
+        .upload-btn{
+            border-radius:12px;
+            padding:14px;
+            font-weight:bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="row justify-content-center align-items-center"
+         style="min-height:100vh;">
+
+        <div class="col-lg-6">
+
+            <div class="card photo-card shadow-lg">
+
+                <div class="photo-header">
+
+                    <h2>📷 Change Profile Photo</h2>
+
+                    <p class="mb-0">
+                        Upload a new profile picture
+                    </p>
+
+                </div>
+
+                <div class="card-body text-center p-5">
+
+                    <img
+                        id="preview"
+                        src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                        class="preview-img mb-4">
+
+                    <form method="POST"
+                          enctype="multipart/form-data">
+
+                        <input
+                            type="file"
+                            name="photo"
+                            id="photoInput"
+                            class="form-control mb-4"
+                            accept="image/*"
+                            required>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary upload-btn w-100">
+
+                            Upload Photo
+
+                        </button>
+
+                        <a href="/settings"
+                           class="btn btn-secondary w-100 mt-3">
+                            ← Back to Settings
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+document.getElementById("photoInput")
+.addEventListener("change", function(event){
+
+    const file = event.target.files[0];
+
+    if(file){
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+            document.getElementById("preview").src = e.target.result;
+        }
+
+        reader.readAsDataURL(file);
+    }
+
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    text-align: center;
+}
+
+h1 {
+    color: #2c3e50;
+}
+
+a {
+    text-decoration: none;
+    background: #3498db;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+a:hover {
+    background: #2980b9;
+}
+
+table {
+    margin: auto;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+}
+

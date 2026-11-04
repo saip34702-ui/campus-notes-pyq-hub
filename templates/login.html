@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student Login</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+
+<style>
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#04142d,#d7e0bc);
+    overflow-x:hidden;
+    padding-top:30px;
+    padding-bottom:30px;
+}
+
+.navbar{
+    box-shadow:0 4px 15px rgba(0,0,0,0.2);
+}
+
+.login-card{
+    background:rgba(255,255,255,0.95);
+    border:none;
+    border-radius:30px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.25);
+    overflow:hidden;
+}
+
+.left-side{
+    background:linear-gradient(135deg,#0d6efd,#6610f2);
+    color:white;
+    padding:50px 35px;
+    height:100%;
+}
+
+.logo-icon{
+    font-size:80px;
+}
+
+.form-control{
+    border-radius:12px;
+    padding:14px;
+    border:1px solid #dee2e6;
+}
+
+.form-control:focus{
+    box-shadow:0 0 15px rgba(13,110,253,0.35);
+    border-color:#0d6efd;
+}
+
+.btn-login{
+    border-radius:12px;
+    padding:13px;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.feature{
+    margin-top:15px;
+}
+
+.feature i{
+    margin-right:10px;
+}
+
+@media(max-width:768px){
+
+    .left-side{
+        display:none;
+    }
+
+}
+
+.login-row{
+    min-height:calc(100vh - 90px);
+}
+
+@media(max-width:768px){
+
+    body{
+        padding-top:20px;
+        padding-bottom:20px;
+    }
+
+    .login-row{
+        min-height:auto;
+        margin-top:25px;
+    }
+
+    .login-card{
+        margin-bottom:25px;
+    }
+
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark bg-primary">
+
+<div class="container">
+
+<a class="navbar-brand fw-bold" href="/">
+📚 Campus Notes & PYQ Hub
+</a>
+
+</div>
+
+</nav>
+
+<div class="container">
+
+<div class="row justify-content-center align-items-center login-row">
+
+<div class="col-lg-9">
+
+<div class="card login-card">
+
+<div class="row g-0">
+
+<div class="col-md-5">
+
+<div class="left-side d-flex flex-column justify-content-center">
+
+<div class="text-center">
+
+<div class="logo-icon">
+📚
+</div>
+
+<h2 class="fw-bold mt-3">
+Campus Notes & PYQ Hub
+</h2>
+
+<p class="mt-3">
+One Place For Notes, PYQs and Study Resources.
+</p>
+
+</div>
+
+<div class="feature">
+<i class="fas fa-book"></i>
+Access Notes & PYQs
+</div>
+
+<div class="feature">
+<i class="fas fa-upload"></i>
+Upload Study Material
+</div>
+
+<div class="feature">
+<i class="fas fa-bell"></i>
+Get Notifications
+</div>
+
+<div class="feature">
+<i class="fas fa-user-graduate"></i>
+Student Community
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-7">
+
+<div class="p-5">
+
+<div class="text-center mb-4">
+
+<h2 class="fw-bold">
+Welcome Back 👋
+</h2>
+
+<p class="text-muted">
+Sign in to continue
+</p>
+
+</div>
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label class="form-label fw-semibold">
+Email Address
+</label>
+
+<input
+type="email"
+name="email"
+class="form-control"
+placeholder="Enter your email"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label class="form-label fw-semibold">
+Password
+</label>
+
+<input
+type="password"
+id="password"
+name="password"
+class="form-control"
+placeholder="Enter your password"
+required>
+
+<div class="form-check mt-2">
+
+<input
+class="form-check-input"
+type="checkbox"
+id="showPassword">
+
+<label
+class="form-check-label"
+for="showPassword">
+
+Show Password
+
+</label>
+
+</div>
+
+</div>
+
+<button
+type="submit"
+class="btn btn-primary btn-login w-100">
+
+<i class="fas fa-sign-in-alt me-2"></i>
+Login
+
+</button>
+
+<p class="text-center mt-3 mb-0">
+
+<a href="/forgot_password"
+   class="text-decoration-none">
+
+Forgot Password?
+
+</a>
+
+</p>
+
+</form>
+
+<hr>
+
+<p class="text-center mb-0">
+
+Don't have an account?
+
+<a href="/register"
+   class="fw-bold text-decoration-none">
+
+Register Here
+
+</a>
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+document.getElementById("showPassword")
+.addEventListener("change", function(){
+
+    let password =
+        document.getElementById("password");
+
+    if(this.checked){
+        password.type = "text";
+    }
+    else{
+        password.type = "password";
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>
